@@ -1,9 +1,9 @@
 def mainDir="Chapter02/2-jenkins-docker"
 def ecrLoginHelper="docker-credential-ecr-login"
-def region="<AWS Region>"
-def ecrUrl="<AWS ECR URL>"
-def repository="<Image Repository Name>"
-def deployHost="<Deploy VM Private IP>"
+def region="ap-northeast-2"
+def ecrUrl="500795750565.dkr.ecr.ap-northeast-2.amazonaws.com"
+def repository="test"
+def deployHost="172.31.7.185"
 
 pipeline {
     agent any
@@ -24,7 +24,7 @@ pipeline {
         }
         stage('Build Docker Image by Jib & Push to AWS ECR Repository') {
             steps {
-                withAWS(region:"${region}", credentials:"aws-key") {
+                withAWS(region:"${region}", credentials:"aws-jenkins") {
                     ecrLogin()
                     sh """
                         curl -O https://amazon-ecr-credential-helper-releases.s3.us-east-2.amazonaws.com/0.4.0/linux-amd64/${ecrLoginHelper}
